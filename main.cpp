@@ -1,19 +1,60 @@
-#include "pico_explorer.hpp"
-#include "drivers/st7789/st7789.hpp"
-#include "libraries/pico_graphics/pico_graphics.hpp"
+/*
+ * main.cpp - part of the PicoW C++ Boilerplate Project
+ *
+ * This file defines the main() function, the entrypoint for your program.
+ *
+ * After the general setup, it simply blinks the LED on your PicoW as the
+ * traditional 'Hello World' of the Pico!
+ *
+ * Copyright (C) 2023 Pete Favelle <ahnlak@ahnlak.com>
+ * This file is released under the BSD 3-Clause License; see LICENSE for details.
+ */
 
-using namespace pimoroni;
+/* Standard header files. */
 
-ST7789 st7789(PicoExplorer::WIDTH, PicoExplorer::HEIGHT, ROTATE_0, false, get_spi_pins(BG_SPI_FRONT));
-PicoGraphics_PenRGB332 graphics(st7789.width, st7789.height, nullptr);
 
-int main() {
-    graphics.set_pen(255, 0, 0);
+/* SDK header files. */
 
-    while(true) {
-        graphics.pixel(Point(0, 0));
+#include "pico/stdlib.h"
+#include "pico/cyw43_arch.h"
 
-        // now we've done our drawing let's update the screen
-        st7789.update(&graphics);
-    }
+
+/* Local header files. */
+
+
+
+/* Functions. */
+
+/*
+ * main() - the entrypoint of the application; this is what runs when the PicoW
+ *          starts up, and would never normally exit.
+ */
+
+int main()
+{
+  /* Initialise stdio handling. */
+  stdio_init_all();
+
+  /* Initialise the WiFi chipset. */
+  if ( cyw43_arch_init() )
+  {
+    printf( "Failed to initialise the WiFI chipset (cyw43)\n" );
+    return 1;
+  }
+
+  /* Enter the main program loop now. */
+  while( true )
+  {
+    /* The blink is very simple, just toggle the GPIO pin high and low. */
+    cyw43_arch_gpio_put( CYW43_WL_GPIO_LED_PIN, 1 );
+    printf( "Light on...\n" );
+    sleep_ms( 250 );
+
+    cyw43_arch_gpio_put( CYW43_WL_GPIO_LED_PIN, 0 );
+    printf( "Light off...\n" );
+    sleep_ms( 250 );
+  }
+
+  /* We would never expect to reach an end....! */
+  return 0;
 }
