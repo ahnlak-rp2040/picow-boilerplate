@@ -12,6 +12,9 @@
 
 /* Standard header files. */
 
+#include <stdio.h>
+#include <stdlib.h>
+
 
 /* SDK header files. */
 
@@ -21,6 +24,7 @@
 
 /* Local header files. */
 
+#include "usbfs.h"
 
 
 /* Functions. */
@@ -42,17 +46,20 @@ int main()
     return 1;
   }
 
+  /* And the USB handling. */
+  usbfs_init();
+
   /* Enter the main program loop now. */
   while( true )
   {
     /* The blink is very simple, just toggle the GPIO pin high and low. */
     cyw43_arch_gpio_put( CYW43_WL_GPIO_LED_PIN, 1 );
     printf( "Light on...\n" );
-    sleep_ms( 250 );
+    usbfs_sleep_ms( 250 );
 
     cyw43_arch_gpio_put( CYW43_WL_GPIO_LED_PIN, 0 );
     printf( "Light off...\n" );
-    sleep_ms( 250 );
+    usbfs_sleep_ms( 250 );
   }
 
   /* We would never expect to reach an end....! */
