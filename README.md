@@ -1,3 +1,5 @@
+[![CMake](https://github.com/ahnlak/picow-boilerplate/actions/workflows/cmake.yml/badge.svg)](https://github.com/ahnlak/picow-boilerplate/actions/workflows/cmake.yml)
+
 # PicoW C++ Boilerplate Project
 
 This is a template repository, inspired by and based on Pimoroni's 
