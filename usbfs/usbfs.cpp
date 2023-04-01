@@ -113,34 +113,214 @@ void usbfs_sleep_ms( uint32_t p_milliseconds )
 }
 
 
+/*
+ * open - opens a file in the FatFS filesystem. Takes the same filename and mode
+ *        strings as fopen()
+ */
+
 usbfs_file_t *usbfs_open( const char *p_pathname, const char *p_mode )
 {
-  return nullptr;
+  BYTE          l_mode;
+  usbfs_file_t *l_fptr;
+  FRESULT       l_result;
+
+  /* We need to translate the fopen-style mode into FatFS style bits. */
+  if ( strcmp( p_mode, "r" ) == 0 )
+  {
+    l_mode =  FA_READ;
+  }
+  else if ( strcmp( p_mode, "r+" ) == 0 )
+  {
+    l_mode =  FA_READ|FA_WRITE;
+  }
+  else if ( strcmp( p_mode, "w" ) == 0 )
+  {
+    l_mode =  FA_CREATE_ALWAYS|FA_WRITE;
+  }
+  else if ( strcmp( p_mode, "w+" ) == 0 )
+  {
+    l_mode =  FA_CREATE_ALWAYS|FA_WRITE|FA_READ;
+  }
+  else if ( strcmp( p_mode, "a" ) == 0 )
+  {
+    l_mode =  FA_OPEN_APPEND|FA_WRITE;
+  }
+  else if ( strcmp( p_mode, "a+" ) == 0 )
+  {
+    l_mode =  FA_OPEN_APPEND|FA_WRITE|FA_READ;
+  }
+  else
+  {
+    /* If it's not a mode we support, fail. */
+    return nullptr;
+  }
+
+  /* We'll need a new file structure so save this all in. */
+  l_fptr = (usbfs_file_t *)malloc( sizeof( usbfs_file_t ) );
+  if ( l_fptr == nullptr )
+  {
+    return nullptr;
+  }
+  memset( l_fptr, 0, sizeof( usbfs_file_t ) );
+
+  /* Good, we know the mode so we can just open the file regularly. */
+  l_result = f_open( &l_fptr->fatfs_fptr, p_pathname, l_mode );
+  if ( l_result != FR_OK )
+  {
+    free( l_fptr );
+    return nullptr;
+  }
+
+  /* Make sure our status flags are set right, and return our filepointer. */
+  l_fptr->modified = false;
+  return l_fptr;
 }
+
+
+/*
+ * close - closes a file in the FatFS filesystem; if the file has been modified,
+ *         it also informs the USB host that this is so.
+ */
 
 bool usbfs_close( usbfs_file_t *p_fileptr )
 {
+  /* Sanity check the pointer. */
+  if ( p_fileptr == nullptr )
+  {
+    return false;
+  }
+
+  /* Then simply close the file. */
+  f_close( &p_fileptr->fatfs_fptr );
+
+  /* If the file was flagged as modified, let the host know to re-load data. */
+  if ( p_fileptr->modified )
+  {
+    usb_set_fs_changed();
+  }
+
+  /* And lastly, free up the memory allocated for our filepointer. */
+  free( p_fileptr );
+
+  /* All done. */
   return true;
 }
 
+
+/*
+ * read - reads data from an open file, taking similar arguments and providing
+ *        the same returns as the standard 'fread()' function; the exception is
+ *        that only 'size' is required, no 'nmemb' parameter (because let's face
+ *        it, in 95% of cases one or other of those is set to 1 anyway).
+ */
+
 size_t usbfs_read( void *p_buffer, size_t p_size, usbfs_file_t *p_fileptr )
 {
-  return 0;
+  UINT      l_bytecount;
+  FRESULT   l_result;
+
+  /* Sanity check our parameters. */
+  if ( ( p_buffer == nullptr ) || ( p_fileptr == nullptr ) )
+  {
+    /* If we don't have valid pointers, we can't read data. */
+    return 0;
+  }
+
+  /* Then we just send it to FatFS. */
+  l_result = f_read( &p_fileptr->fatfs_fptr, p_buffer, p_size, &l_bytecount );
+  if ( l_result != FR_OK )
+  {
+    /* The write has failed. */
+    return 0;
+  }
+
+  /* Simply return the number of bytes read then. */
+  return l_bytecount;
 }
+
+
+/*
+ * write - writes data from an open file, taking similar arguments and providing
+ *         the same returns as the standard 'fwrite()' function; the exception is
+ *         that only 'size' is required, no 'nmemb' parameter (because let's face
+ *         it, in 95% of cases one or other of those is set to 1 anyway).
+ */
 
 size_t usbfs_write( const void *p_buffer, size_t p_size, usbfs_file_t *p_fileptr )
 {
-  return 0;
+  UINT      l_bytecount;
+  FRESULT   l_result;
+
+  /* Sanity check our parameters. */
+  if ( ( p_buffer == nullptr ) || ( p_fileptr == nullptr ) )
+  {
+    /* If we don't have valid pointers, we can't write data. */
+    return 0;
+  }
+
+  /* Then we just send it to FatFS. */
+  l_result = f_write( &p_fileptr->fatfs_fptr, p_buffer, p_size, &l_bytecount );
+  if ( l_result != FR_OK )
+  {
+    /* The write has failed. */
+    return 0;
+  }
+
+  /* Flag that we've written data to this file. */
+  p_fileptr->modified = true;
+
+  /* Simply return the number of bytes written then. */
+  return l_bytecount;
 }
+
+
+/*
+ * gets - reads a line of text from the file; takes the same arguments and 
+ *        returns the same as the standard 'fgets()' function.
+ */
 
 char *usbfs_gets( char *p_buffer, size_t p_size, usbfs_file_t *p_fileptr )
 {
-  return nullptr;
+  /* Sanity check our parameters. */
+  if ( ( p_buffer == nullptr ) || ( p_fileptr == nullptr ) )
+  {
+    /* If we don't have valid pointers, we can't read data. */
+    return nullptr;
+  }
+
+  /* Excellent; so, ask FatFS to do the work. */
+  return f_gets( p_buffer, p_size, &p_fileptr->fatfs_fptr );
 }
 
-size_t usbfs_puts( const char *p_buffer, size_t p_size, usbfs_file_t *p_fileptr )
+
+/*
+ * puts - writes a line of text from the file; takes the same arguments and 
+ *        returns the same as the standard 'fputs()' function.
+ */
+
+size_t usbfs_puts( const char *p_buffer, usbfs_file_t *p_fileptr )
 {
-  return 0;
+  int l_bytecount;
+
+  /* Sanity check our parameters. */
+  if ( ( p_buffer == nullptr ) || ( p_fileptr == nullptr ) )
+  {
+    /* If we don't have valid pointers, we can't write data. */
+    return -1;
+  }
+
+  /* Excellent; so, ask FatFS to do the work. */
+  l_bytecount = f_puts( p_buffer, &p_fileptr->fatfs_fptr );
+
+  /* 
+   * If a negative value was returned, this indicates an error - otherwise,
+   * flag that the file has been modified.
+   */
+  if ( l_bytecount >= 0 )
+  {
+    p_fileptr->modified = true;
+  }
+  return l_bytecount;
 }
 
 /* End of file usbfs.cpp */

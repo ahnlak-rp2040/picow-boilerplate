@@ -28,6 +28,7 @@
 typedef struct
 {
   FIL   fatfs_fptr;
+  bool  modified;
 } usbfs_file_t;
 
 
@@ -52,7 +53,7 @@ bool            usbfs_close( usbfs_file_t * );
 size_t          usbfs_read( void *, size_t, usbfs_file_t * );
 size_t          usbfs_write( void *, size_t, usbfs_file_t * );
 char           *usbfs_gets( char *, size_t, usbfs_file_t * );
-size_t          usbfs_puts( char *, size_t, usbfs_file_t * );
+size_t          usbfs_puts( char *, usbfs_file_t * );
 
 
 /* End of file usbfs/usbfs.hpp */
