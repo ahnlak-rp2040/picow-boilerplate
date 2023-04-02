@@ -1,6 +1,6 @@
 [![CMake](https://github.com/ahnlak/picow-boilerplate/actions/workflows/cmake.yml/badge.svg)](https://github.com/ahnlak/picow-boilerplate/actions/workflows/cmake.yml)
 
-# PicoW C++ Boilerplate Project
+# PicoW C/C++ Boilerplate Project
 
 This is a template repository, inspired by and based on Pimoroni's 
 [Pico C++ Boilerplate Project](https://github.com/pimoroni/pico-boilerplate). 
@@ -25,7 +25,7 @@ Pico Libraries, although it does not depend on these at all.
 
 I've attempted to keep everything as comprehensively documented as possible;
 this can be found in the `/docs` folder of this repository, and on
-[PicoW C++ Boilerplate GitHub Pages](https://ahnlak.github.io/picow-boilerplate).
+[PicoW C/C++ Boilerplate GitHub Pages](https://ahnlak.github.io/picow-boilerplate).
 
 
 ## Further Examples

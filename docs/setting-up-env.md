@@ -21,7 +21,7 @@ sudo apt update
 sudo apt install build-essential gcc-arm-none-eabi cmake git python3
 ```
 
-* `build-essential` contains all the 'normal' C++ development tools (compiler et al)
+* `build-essential` contains all the 'normal' C/C++ development tools (compiler et al)
 * `gcc-arm-none-eabi` is the cross-compiler that allows you to build code which
   will run on the processor on the PicoW
 * `cmake` is the tool that you will use to run the build process

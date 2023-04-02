@@ -1,5 +1,5 @@
 /*
- * lwipopts.h - part of the PicoW C++ Boilerplate Project
+ * lwipopts.h - part of the PicoW C/C++ Boilerplate Project
  *
  * This is required for any project which uses cyw43* or lwip* functions,
  * which is generally going to be anything using the W of a PicoW.

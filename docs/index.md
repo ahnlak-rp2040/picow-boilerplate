@@ -1,4 +1,4 @@
-# PicoW C++ Boilerplate Project
+# PicoW C/C++ Boilerplate Project
 
 This is a template repository, inspired by and based on Pimoroni's 
 [Pico C++ Boilerplate Project](https://github.com/pimoroni/pico-boilerplate). 
@@ -7,7 +7,7 @@ PicoW, but obviously parts of it that do not require the WiFi / Bluetooth
 functionality will be transferable to a regular Pico.
 
 These pages attempt to document everything you'll need to know to get developing;
-it does *not* attempt to teach you C++; there are way better books available to
+it does *not* attempt to teach you C/C++; there are way better books available to
 do that.
 
 The primary assumption is also that you're working on a Linux box, or Raspian,
@@ -28,7 +28,10 @@ on.
 
 ## Boilerplate Features
 
-* tba
+* [USB Mass Storage Device](usbfs.md) presents a filesystem to the host computer,
+  along with functions to allow your project to read and write files to that
+  in-flash filesystem. This is done while preserving the usual `stdio` USB
+  functionality of the Raspberry Pi Pico C/C++ SDK.
 
 
 ## Further Examples

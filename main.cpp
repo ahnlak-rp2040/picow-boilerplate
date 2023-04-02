@@ -1,5 +1,5 @@
 /*
- * main.cpp - part of the PicoW C++ Boilerplate Project
+ * main.cpp - part of the PicoW C/C++ Boilerplate Project
  *
  * This file defines the main() function, the entrypoint for your program.
  *

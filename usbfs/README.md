@@ -9,11 +9,14 @@ It is designed to provide a relatively easy way to provide configuration
 details to an application (such as WiFi details) that would otherwise require
 recompilation and redeployment.
 
+The library is written in pure C, so can be safely used with C or C++ based
+projects.
+
 
 Usage
 -----
 
-The library is baked into the [Picow C++ Boilerplate Project](https://github.com/ahnlak/picow-boilerplate),
+The library is baked into the [Picow C/C++ Boilerplate Project](https://github.com/ahnlak/picow-boilerplate),
 however it's possible to simply copy the entire `usbfs` directory into your
 own project, and include it in your `CMakeList.txt` file, and then simply
 `#include "usbfs.h"`:
@@ -46,6 +49,9 @@ directly.
 `usbfs_open()`, `usbfs_close()`, `usbfs_read()`, `usbfs_write()`, `usbfs_gets()`
 and `usbfs_puts()` are essentially the equivalents of the standard C equivalents,
 to allow you to interract with files stored on this filesystem.
+
+`usbfs_timestamp()` returns the modification date/time of the named file, to make
+it easy to detect changes.
 
 
 Caveats

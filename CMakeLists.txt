@@ -1,4 +1,4 @@
-# CMakeLists.txt - part of the PicoW C++ Boilerplate Project
+# CMakeLists.txt - part of the PicoW C/C++ Boilerplate Project
 cmake_minimum_required(VERSION 3.12)
 
 # Change your executable name to something creative!
