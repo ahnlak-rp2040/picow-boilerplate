@@ -1,5 +1,5 @@
 /*
- * usbfs/usbfs.cpp - part of the PicoW C++ Boilerplate Project
+ * usbfs/usbfs.cpp - part of the PicoW C/C++ Boilerplate Project
  *
  * usbfs is the library that handles presenting a filesystem to the host
  * over USB; the main aim is to make it easy to present configuration files
@@ -152,14 +152,14 @@ usbfs_file_t *usbfs_open( const char *p_pathname, const char *p_mode )
   else
   {
     /* If it's not a mode we support, fail. */
-    return nullptr;
+    return NULL;
   }
 
   /* We'll need a new file structure so save this all in. */
   l_fptr = (usbfs_file_t *)malloc( sizeof( usbfs_file_t ) );
-  if ( l_fptr == nullptr )
+  if ( l_fptr == NULL )
   {
-    return nullptr;
+    return NULL;
   }
   memset( l_fptr, 0, sizeof( usbfs_file_t ) );
 
@@ -168,7 +168,7 @@ usbfs_file_t *usbfs_open( const char *p_pathname, const char *p_mode )
   if ( l_result != FR_OK )
   {
     free( l_fptr );
-    return nullptr;
+    return NULL;
   }
 
   /* Make sure our status flags are set right, and return our filepointer. */
@@ -185,7 +185,7 @@ usbfs_file_t *usbfs_open( const char *p_pathname, const char *p_mode )
 bool usbfs_close( usbfs_file_t *p_fileptr )
 {
   /* Sanity check the pointer. */
-  if ( p_fileptr == nullptr )
+  if ( p_fileptr == NULL )
   {
     return false;
   }
@@ -220,7 +220,7 @@ size_t usbfs_read( void *p_buffer, size_t p_size, usbfs_file_t *p_fileptr )
   FRESULT   l_result;
 
   /* Sanity check our parameters. */
-  if ( ( p_buffer == nullptr ) || ( p_fileptr == nullptr ) )
+  if ( ( p_buffer == NULL ) || ( p_fileptr == NULL ) )
   {
     /* If we don't have valid pointers, we can't read data. */
     return 0;
@@ -252,7 +252,7 @@ size_t usbfs_write( const void *p_buffer, size_t p_size, usbfs_file_t *p_fileptr
   FRESULT   l_result;
 
   /* Sanity check our parameters. */
-  if ( ( p_buffer == nullptr ) || ( p_fileptr == nullptr ) )
+  if ( ( p_buffer == NULL ) || ( p_fileptr == NULL ) )
   {
     /* If we don't have valid pointers, we can't write data. */
     return 0;
@@ -282,10 +282,10 @@ size_t usbfs_write( const void *p_buffer, size_t p_size, usbfs_file_t *p_fileptr
 char *usbfs_gets( char *p_buffer, size_t p_size, usbfs_file_t *p_fileptr )
 {
   /* Sanity check our parameters. */
-  if ( ( p_buffer == nullptr ) || ( p_fileptr == nullptr ) )
+  if ( ( p_buffer == NULL ) || ( p_fileptr == NULL ) )
   {
     /* If we don't have valid pointers, we can't read data. */
-    return nullptr;
+    return NULL;
   }
 
   /* Excellent; so, ask FatFS to do the work. */
@@ -303,7 +303,7 @@ size_t usbfs_puts( const char *p_buffer, usbfs_file_t *p_fileptr )
   int l_bytecount;
 
   /* Sanity check our parameters. */
-  if ( ( p_buffer == nullptr ) || ( p_fileptr == nullptr ) )
+  if ( ( p_buffer == NULL ) || ( p_fileptr == NULL ) )
   {
     /* If we don't have valid pointers, we can't write data. */
     return -1;
@@ -322,5 +322,30 @@ size_t usbfs_puts( const char *p_buffer, usbfs_file_t *p_fileptr )
   }
   return l_bytecount;
 }
+
+
+/*
+ * timestamp - fetches the timestamp of the named file; a zero is returned
+ *             if the file does not exist. This is encoded as per FatFS, but
+ *             can be used without decoding to compare to previous stamps.
+ */
+
+uint32_t usbfs_timestamp( const char *p_pathname )
+{
+  FILINFO   l_fileinfo;
+  FRESULT   l_result;
+
+  /* Ask for information about the file. */
+  l_result = f_stat( p_pathname, &l_fileinfo );
+  if ( l_result != FR_OK )
+  {
+    /* If we encountered an error, return a zero timestamp. */
+    return 0;
+  }
+
+  /* The date and time are both encoded in WORDS; stick them together. */
+  return ( l_fileinfo.fdate << 16 ) | l_fileinfo.ftime;
+}
+
 
 /* End of file usbfs.cpp */

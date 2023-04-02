@@ -1,5 +1,5 @@
 /*
- * usbfs/usb.cpp - part of the PicoW C++ Boilerplate Project
+ * usbfs/usb.cpp - part of the PicoW C/C++ Boilerplate Project
  *
  * These functions are all the callbacks required by TinyUSB; it is largely
  * culled from DaftFreak's awesome work on the PicoSystem.
@@ -160,7 +160,7 @@ void tud_msc_capacity_cb( uint8_t p_lun,
                           uint32_t *p_block_count, uint16_t *p_block_size )
 {
   /* This is a question for the storage layer. */
-  storage_get_size( *p_block_size, *p_block_count );
+  storage_get_size( p_block_size, p_block_count );
   return;
 }
 

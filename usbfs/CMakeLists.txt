@@ -1,4 +1,4 @@
-# CMakeLists.txt for usbfs - part of the PicoW C++ Boilerplate Project
+# CMakeLists.txt for usbfs - part of the PicoW C/C++ Boilerplate Project
 #
 # This library uses FatFS (http://elm-chan.org/fsw/ff/00index_e.html) to provide
 # a mountable USB filesystem to Pico C/C++ SDK based projects.
@@ -11,17 +11,17 @@
 
 add_library(usbfs
   # First, the source for the FatFS library.
-  ${CMAKE_CURRENT_LIST_DIR}/diskio.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/diskio.c
   ${CMAKE_CURRENT_LIST_DIR}/ff.c
   ${CMAKE_CURRENT_LIST_DIR}/ffunicode.c
 
   # Next, the interfaces for TinyUSB
-  ${CMAKE_CURRENT_LIST_DIR}/storage.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/usb.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/usb_descriptors.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/storage.c
+  ${CMAKE_CURRENT_LIST_DIR}/usb.c
+  ${CMAKE_CURRENT_LIST_DIR}/usb_descriptors.c
 
   # And lastly, the user-facing routines
-  ${CMAKE_CURRENT_LIST_DIR}/usbfs.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/usbfs.c
 )
 
 # Make our header file(s) accessible both within and external to the library.

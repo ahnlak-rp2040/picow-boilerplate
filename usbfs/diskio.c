@@ -1,5 +1,5 @@
 /*
- * usbfs/diskio.cpp - part of the PicoW C++ Boilerplate Project
+ * usbfs/diskio.cpp - part of the PicoW C/C++ Boilerplate Project
  *
  * These functions provide callbacks for FatFS to talk to our storage layer.
  * 
@@ -115,7 +115,7 @@ DRESULT disk_ioctl( BYTE pdrv, BYTE cmd, void* buff )
 
     case GET_SECTOR_COUNT:
       /* Just ask the storage layer for this data. */
-      storage_get_size( block_size, num_blocks );
+      storage_get_size( &block_size, &num_blocks );
       *(LBA_t *)buff = num_blocks;
       return RES_OK;
 

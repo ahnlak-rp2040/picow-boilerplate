@@ -1,5 +1,5 @@
 /*
- * usbfs/usbfs.hpp - part of the PicoW C++ Boilerplate Project
+ * usbfs/usbfs.hpp - part of the PicoW C/C++ Boilerplate Project
  *
  * usbfs is the library that handles presenting a filesystem to the host
  * over USB; the main aim is to make it easy to present configuration files
@@ -36,13 +36,17 @@ typedef struct
 
 /* Internal functions. */
 
-void            storage_get_size( uint16_t &, uint32_t & );
+void            storage_get_size( uint16_t *, uint32_t * );
 int32_t         storage_read( uint32_t, uint32_t, void *, uint32_t );
 int32_t         storage_write( uint32_t, uint32_t, const uint8_t *, uint32_t );
 
 void            usb_set_fs_changed( void );
 
 /* Public functions. */
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 void            usbfs_init( void );
 void            usbfs_update( void );
@@ -51,9 +55,14 @@ void            usbfs_sleep_ms( uint32_t );
 usbfs_file_t   *usbfs_open( const char *, const char * );
 bool            usbfs_close( usbfs_file_t * );
 size_t          usbfs_read( void *, size_t, usbfs_file_t * );
-size_t          usbfs_write( void *, size_t, usbfs_file_t * );
+size_t          usbfs_write( const void *, size_t, usbfs_file_t * );
 char           *usbfs_gets( char *, size_t, usbfs_file_t * );
-size_t          usbfs_puts( char *, usbfs_file_t * );
+size_t          usbfs_puts( const char *, usbfs_file_t * );
+uint32_t        usbfs_timestamp( const char * );
+
+#ifdef __cplusplus
+}
+#endif
 
 
 /* End of file usbfs/usbfs.hpp */

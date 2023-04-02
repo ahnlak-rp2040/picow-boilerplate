@@ -1,5 +1,5 @@
 /*
- * usbfs/storage.cpp - part of the PicoW C++ Boilerplate Project
+ * usbfs/storage.cpp - part of the PicoW C/C++ Boilerplate Project
  *
  * These functions provide a common storage backend, to be used both by TinyUSB
  * and FatFS. The storage is simply a small section of flash at the end of memory.
@@ -39,11 +39,11 @@ static const uint32_t m_storage_offset = PICO_FLASH_SIZE_BYTES - m_storage_size;
  * get_size - provides size information about storage. 
  */
 
-void storage_get_size( uint16_t &p_block_size, uint32_t &p_num_blocks )
+void storage_get_size( uint16_t *p_block_size, uint32_t *p_num_blocks )
 {
   /* Very simple look up. */
-  p_block_size = FLASH_SECTOR_SIZE;
-  p_num_blocks = m_storage_size / FLASH_SECTOR_SIZE;
+  *p_block_size = FLASH_SECTOR_SIZE;
+  *p_num_blocks = m_storage_size / FLASH_SECTOR_SIZE;
 
   /* All done. */
   return;
