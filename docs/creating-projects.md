@@ -7,7 +7,7 @@ but the first option is the simplest.
 
 ## Create A New Respository
 
-Head to [github.com/ahnlak/picow-boilerplate](https://github.com/ahnlak/picow-boilerplate)
+Head to [github.com/ahnlak-rp2040/picow-boilerplate](https://github.com/ahnlak-rp2040/picow-boilerplate)
 and you will see a green "Use this template" button near the top of the page
 (if you don't, you might need to log in first).
 

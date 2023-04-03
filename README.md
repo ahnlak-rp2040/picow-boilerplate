@@ -1,4 +1,4 @@
-[![CMake](https://github.com/ahnlak/picow-boilerplate/actions/workflows/cmake.yml/badge.svg)](https://github.com/ahnlak/picow-boilerplate/actions/workflows/cmake.yml)
+[![CMake](https://github.com/ahnlak-rp2040/picow-boilerplate/actions/workflows/cmake.yml/badge.svg)](https://github.com/ahnlak-rp2040/picow-boilerplate/actions/workflows/cmake.yml)
 
 # PicoW C/C++ Boilerplate Project
 
@@ -25,7 +25,7 @@ Pico Libraries, although it does not depend on these at all.
 
 I've attempted to keep everything as comprehensively documented as possible;
 this can be found in the `/docs` folder of this repository, and on
-[PicoW C/C++ Boilerplate GitHub Pages](https://ahnlak.github.io/picow-boilerplate).
+[PicoW C/C++ Boilerplate GitHub Pages](https://ahnlak-rp2040.github.io/picow-boilerplate).
 
 
 ## Further Examples

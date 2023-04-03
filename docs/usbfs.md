@@ -21,7 +21,7 @@ projects.
 
 ## Usage
 
-The library is baked into the [Picow C/C++ Boilerplate Project](https://github.com/ahnlak/picow-boilerplate),
+The library is baked into the [Picow C/C++ Boilerplate Project](https://github.com/ahnlak-rp2040/picow-boilerplate),
 however it's possible to simply copy the entire `usbfs` directory into your
 own project, and include it in your `CMakeList.txt` file, and then simply
 `#include "usbfs.h"`:
