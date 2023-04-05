@@ -24,6 +24,7 @@
 
 /* Local header files. */
 
+#include "config.h"
 #include "usbfs.h"
 
 
@@ -36,6 +37,8 @@
 
 int main()
 {
+  int blink_rate = 250;
+
   /* Initialise stdio handling. */
   stdio_init_all();
 
@@ -49,17 +52,49 @@ int main()
   /* And the USB handling. */
   usbfs_init();
 
+  /* Declare some default configuration details. */
+  config_t default_config[] = 
+  {
+    { "BLINK_RATE", "250" },
+    { "", "" }
+  };
+
+  /* Set up the initial load of the configuration file. */
+  config_load( "config.txt", default_config, 10 );
+
+  /* Save it straight out, to preserve any defaults we put there. */
+  config_save();
+
+  /* See if we have a blink rate in there. */
+  const char *blink_rate_string = config_get( "BLINK_RATE" );
+  if ( ( blink_rate_string != NULL ) &&
+       ( atoi( blink_rate_string ) > 0 ) )
+  {
+    blink_rate = atoi( blink_rate_string );
+  }
+
   /* Enter the main program loop now. */
   while( true )
   {
+    /* Monitor the configuration file. */
+    if ( config_check() )
+    {
+      /* This indicates the configuration has changed - handle it if required. */
+      blink_rate_string = config_get( "BLINK_RATE" );
+      if ( ( blink_rate_string != NULL ) &&
+           ( atoi( blink_rate_string ) > 0 ) )
+      {
+        blink_rate = atoi( blink_rate_string );
+      }
+    }
+
     /* The blink is very simple, just toggle the GPIO pin high and low. */
+    printf( "Blinking at a rate of %d ms\n", blink_rate );
     cyw43_arch_gpio_put( CYW43_WL_GPIO_LED_PIN, 1 );
-    printf( "Light on...\n" );
-    usbfs_sleep_ms( 250 );
+    usbfs_sleep_ms( blink_rate );
 
     cyw43_arch_gpio_put( CYW43_WL_GPIO_LED_PIN, 0 );
-    printf( "Light off...\n" );
-    usbfs_sleep_ms( 250 );
+    usbfs_sleep_ms( blink_rate );
   }
 
   /* We would never expect to reach an end....! */

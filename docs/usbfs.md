@@ -36,6 +36,12 @@ target_link_libraries(${NAME}
 (where `${NAME}` is the name of your project).
 
 
+## Filename Limitations
+
+Long filenames are NOT supported, which means all filenames must conform to
+the ancient `8.3` DOS naming rules.
+
+
 ## Utility Functions
 
 These functions are primarily focused on handling the USB connection to the 

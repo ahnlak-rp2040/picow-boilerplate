@@ -1,7 +1,7 @@
 /*
  * usbfs/usb.cpp - part of the PicoW C/C++ Boilerplate Project
  *
- * These functions are all the callbacks required by TinyUSB; it is largely
+ * These functions are mostly the callbacks required by TinyUSB; it is largely
  * culled from DaftFreak's awesome work on the PicoSystem.
  *
  * Copyright (C) 2023 Pete Favelle <ahnlak@ahnlak.com>
@@ -30,6 +30,19 @@ static bool     m_fs_changed = false;
 
 
 /* Functions.*/
+
+/*
+ * usb_set_fs_changed - sets the flag to indicate that a file has been locally
+ *                      changed; in turn, this ensures that the host is told
+ *                      that a re-scan is required.
+ */
+
+void usb_set_fs_changed( void )
+{
+  /* Very simple flag set. */
+  m_fs_changed = true;
+  return;
+}
 
 
 /*

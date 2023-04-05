@@ -1,5 +1,5 @@
 /*
- * usbfs/usbfs.hpp - part of the PicoW C/C++ Boilerplate Project
+ * usbfs/usbfs.h - part of the PicoW C/C++ Boilerplate Project
  *
  * usbfs is the library that handles presenting a filesystem to the host
  * over USB; the main aim is to make it easy to present configuration files
@@ -65,4 +65,4 @@ uint32_t        usbfs_timestamp( const char * );
 #endif
 
 
-/* End of file usbfs/usbfs.hpp */
+/* End of file usbfs/usbfs.h */

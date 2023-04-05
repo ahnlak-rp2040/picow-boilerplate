@@ -24,6 +24,7 @@ pico_sdk_init()
 # Define the source files
 add_executable(${NAME}
     main.cpp # <-- Add source files here!
+    config.c
 )
 
 # We need to explicitly include any headers within our own project

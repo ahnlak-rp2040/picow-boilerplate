@@ -87,7 +87,7 @@ void usbfs_update( void )
 
 /*
  * sleep_ms - a replacement for the standard sleep_ms function; this will
- *            run update every millisecond until we reach the requested time,
+ *            run update in a busy loop until we reach the requested time,
  *            to ensure that TinyUSB doesn't run into trouble.
  */
 
@@ -102,10 +102,7 @@ void usbfs_sleep_ms( uint32_t p_milliseconds )
   while( !time_reached( l_target_time ) )
   {
     /* Run any updates. */
-    usbfs_update();
-
-    /* And briefly pause. */
-    sleep_ms(1);
+    tud_task();
   }
 
   /* All done. */
@@ -334,6 +331,9 @@ uint32_t usbfs_timestamp( const char *p_pathname )
 {
   FILINFO   l_fileinfo;
   FRESULT   l_result;
+
+  /* Force a re-mount to make sure timestamps are sync'd */
+  f_mount( &m_fatfs, "", 1 );
 
   /* Ask for information about the file. */
   l_result = f_stat( p_pathname, &l_fileinfo );
