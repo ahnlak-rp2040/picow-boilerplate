@@ -1,7 +1,7 @@
 # Configuration Files
 
-Included in the Boilerplate is a simple, lightweight configuration file handler,
-written in pure C. 
+Optionally included in the Boilerplate is a simple, lightweight configuration
+file handler, written in pure C. 
 
 It's deliberately simple in design, maintaining a simple array of `name`/`value`
 string pairs that can be read from, and written to, a file on the local filesystem.
@@ -12,10 +12,13 @@ string pairs that can be read from, and written to, a file on the local filesyst
 The configuration file handler is used by the main Boilerplate code; it consists
 of a single C file (plus header), so it's simply a matter of
 
-* adding `config.c` to the list of source files in your `CMakeLists.txt`
-* including `config.h` in your main source file
+* adding `opt/config.c` to the list of source files in your `CMakeLists.txt`
+* including `opt/config.h` in your main source file
 * calling `config_load()` in your programs startup
 * calling `config_check()` in your programs main loop
+
+(alternatively, you can copy `config.c` and `config.h` to your top level source
+directory and use them from there)
 
 
 ## Functions

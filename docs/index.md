@@ -28,10 +28,20 @@ on.
 
 ## Boilerplate Features
 
+* Pre-built Github Actions to automatically compile your project with every 
+  check-in, and generate ZIP package files with every release.
 * [USB Mass Storage Device](usbfs.md) presents a filesystem to the host computer,
   along with functions to allow your project to read and write files to that
   in-flash filesystem. This is done while preserving the usual `stdio` USB
   functionality of the Raspberry Pi Pico C/C++ SDK.
+
+
+### Optional Extras 
+
+These extras can be found in the `opt/` directory; they are each single-file
+single-purpose packages that you use if you need them, and ignore them if you
+don't!
+
 * [Configuration File Handling](config.md) is a drop-in example of how you can
   leverage the USB Mass Storage Device filesystem to easily offer users a way
   to edit a local configuration file.

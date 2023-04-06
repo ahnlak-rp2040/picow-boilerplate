@@ -24,8 +24,8 @@
 
 /* Local header files. */
 
-#include "config.h"
 #include "usbfs.h"
+#include "opt/config.h"
 
 
 /* Functions. */
