@@ -100,3 +100,5 @@ int main()
   /* We would never expect to reach an end....! */
   return 0;
 }
+
+/* End of file main.cpp */

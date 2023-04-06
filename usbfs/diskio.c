@@ -128,4 +128,4 @@ DRESULT disk_ioctl( BYTE pdrv, BYTE cmd, void* buff )
   return RES_PARERR;
 }
 
-/* End of file diskio.cpp */
+/* End of file usbfs/diskio.cpp */

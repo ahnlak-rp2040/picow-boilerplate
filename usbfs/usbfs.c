@@ -348,4 +348,4 @@ uint32_t usbfs_timestamp( const char *p_pathname )
 }
 
 
-/* End of file usbfs.cpp */
+/* End of file usbfs/usbfs.cpp */

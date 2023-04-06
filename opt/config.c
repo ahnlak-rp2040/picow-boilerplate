@@ -1,7 +1,10 @@
 /*
- * config.c - part of the PicoW C/C++ Boilerplate Project
+ * opt/config.c - part of the PicoW C/C++ Boilerplate Project
  *
- *
+ * An optional configuration file handler; this is provided as part of the
+ * boilerplate, but if you don't require it (or have built your own) you can
+ * safely delete this file (and config.c) and remove it from CMakeLists.txt
+ * 
  * Copyright (C) 2023 Pete Favelle <ahnlak@ahnlak.com>
  * This file is released under the BSD 3-Clause License; see LICENSE for details.
  */
@@ -325,3 +328,5 @@ void config_set( const char *p_name, const char *p_value )
   m_config_count++;
   return;
 }
+
+/* End of file opt/config.c */

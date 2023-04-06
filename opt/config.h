@@ -1,7 +1,7 @@
 /*
- * config.h - part of the PicoW C/C++ Boilerplate Project
+ * opt/config.h - part of the PicoW C/C++ Boilerplate Project
  *
- * Header for an example configuration file handler; this is provided as part
+ * Header for an optional configuration file handler; this is provided as part
  * of the boilerplate, but if you don't require it (or have built your own)
  * you can safely delete this file (and config.c) and remove it from your
  * CMakeLists.txt file.
@@ -48,4 +48,4 @@ void        config_set( const char *, const char * );
 #endif
 
 
-/* End of file config.h */
+/* End of file opt/config.h */
