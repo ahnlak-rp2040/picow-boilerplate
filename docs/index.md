@@ -45,7 +45,8 @@ don't!
 * [Configuration File Handling](config.md) is a drop-in example of how you can
   leverage the USB Mass Storage Device filesystem to easily offer users a way
   to edit a local configuration file.
-
+* [HTTP(S) Client](httpclient.md) offers a simple way of fetching requests from
+  websites, as cleanly as possible.
 
 ## Further Examples
 

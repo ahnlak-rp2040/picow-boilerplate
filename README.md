@@ -12,6 +12,10 @@ It is intended as a useful starting point for working with PicoW-based projects
 using the Raspberry Pi Pico C/C++ SDK; it also bakes in support for the Pimoroni
 Pico Libraries, although it does not depend on these at all.
 
+You generally want to be working with the latest release of the Raspberry Pi
+Pico C/C++ SDK; specifically, you will need to be on at least 1.5.0 to have
+support for all the features we have here.
+
 
 ## Features
 
@@ -19,6 +23,7 @@ Pico Libraries, although it does not depend on these at all.
 * support for a USB Mass Storage mode, to make it easy to provide a configuration
   file to your PicoW project (for example, providing WiFi settings) without the
   need to recompile.
+* A collection of optional additional lightweight libraries for specific tasks.
 
 
 ## Documentation

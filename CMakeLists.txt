@@ -24,6 +24,7 @@ pico_sdk_init()
 # Define the source files
 add_executable(${NAME}
     opt/config.c           # <-- Configuration file handler (optional)
+    opt/httpclient.c       # <-- HTTP(S) Client (optional)
     main.cpp               # <-- Start adding your own code here!
 )
 

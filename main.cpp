@@ -26,6 +26,7 @@
 
 #include "usbfs.h"
 #include "opt/config.h"
+#include "opt/httpclient.h"
 
 
 /* Functions. */
@@ -38,6 +39,8 @@
 int main()
 {
   int blink_rate = 250;
+  httpclient_request_t *http_request;
+
 
   /* Initialise stdio handling. */
   stdio_init_all();
@@ -56,6 +59,8 @@ int main()
   config_t default_config[] = 
   {
     { "BLINK_RATE", "250" },
+    { "WIFI_SSID", "my_network" },
+    { "WIFI_PASSWORD", "my_password" },
     { "", "" }
   };
 
@@ -73,6 +78,11 @@ int main()
     blink_rate = atoi( blink_rate_string );
   }
 
+  /* Set up a simple web request. */
+  httpclient_set_credentials( config_get( "WIFI_SSID" ), config_get( "WIFI_PASSWORD" ) );
+  http_request = httpclient_open( "http://httpbin.org/get", NULL, 1024 );
+
+
   /* Enter the main program loop now. */
   while( true )
   {
@@ -85,6 +95,22 @@ int main()
            ( atoi( blink_rate_string ) > 0 ) )
       {
         blink_rate = atoi( blink_rate_string );
+      }
+
+      /* Switch to potentially new WiFi credentials. */
+      httpclient_set_credentials( config_get( "WIFI_SSID" ), config_get( "WIFI_PASSWORD" ) );
+    }
+
+    /* Service the http request, if still active. */
+    if ( http_request != NULL )
+    {
+      httpclient_status_t l_status = httpclient_check( http_request );
+
+      if ( l_status == HTTPCLIENT_COMPLETE )
+      {
+        printf( "Response:\n%s\n", httpclient_get_response( http_request ) );
+        httpclient_close( http_request );
+        http_request = NULL;
       }
     }
 
