@@ -20,6 +20,10 @@
 #define PCBP_HTTP_WIFI_RETRY_MS     5000
 #define PCBP_HTTP_HOST_MAXLEN       63
 #define PCBP_HTTP_PATH_MAXLEN       127
+#define PCBP_HTTP_TIMEOUT_SECS      10
+
+#define PCBP_HEADER_BUFSIZE         1023
+#define PCBP_REQUEST_USER_AGENT     "Picow Boilerplate HTTP Client v0.1"
 
 
 /* Enumerations. */
@@ -30,10 +34,14 @@ typedef enum
   HTTPCLIENT_WIFI_INIT,
   HTTPCLIENT_WIFI,
   HTTPCLIENT_DNS,
+  HTTPCLIENT_CONNECT,
+  HTTPCLIENT_REQUEST,
+  HTTPCLIENT_RESPONSE_STATUS,
   HTTPCLIENT_HEADERS,
   HTTPCLIENT_DATA,
   HTTPCLIENT_TRUNCATED,
-  HTTPCLIENT_COMPLETE
+  HTTPCLIENT_COMPLETE,
+  HTTPCLIENT_FAILED
 } httpclient_status_t;
 
 
@@ -41,14 +49,26 @@ typedef enum
 
 typedef struct
 {
+  /* Elements used for high level request management. */
   char                  host[PCBP_HTTP_HOST_MAXLEN+1];
   char                  path[PCBP_HTTP_PATH_MAXLEN+1];
+  ip_addr_t             host_addr;
   uint16_t              port;
   bool                  tls;
   httpclient_status_t   status;
   char                 *response;
-  uint16_t              response_size;
+  bool                  response_allocated;
+  uint16_t              response_max_size;
+  uint16_t              response_length;
   absolute_time_t       wifi_retry_time;
+
+  /* Managing the HTTP response. */
+  char                  header_buffer[PCBP_HEADER_BUFSIZE+1];
+  uint16_t              http_status;
+  uint16_t              content_length;
+
+  /* Elements used for low level lwIP conversations. */
+  struct altcp_pcb     *pcb;
 
 } httpclient_request_t;
 

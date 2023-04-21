@@ -23,8 +23,11 @@ support for all the features we have here.
 * support for a USB Mass Storage mode, to make it easy to provide a configuration
   file to your PicoW project (for example, providing WiFi settings) without the
   need to recompile.
-* A collection of optional additional lightweight libraries for specific tasks.
-
+* A collection of optional additional lightweight libraries for specific tasks:
+  - `config` provides basic handling for configuration files stored on the
+  internal filesystem provided by USBFS.
+  - `httpclient` provides a simple mechanism for retrieving data from a
+  web server.
 
 ## Documentation
 

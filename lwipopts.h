@@ -11,6 +11,10 @@
 #ifndef __LWIPOPTS_H__
 #define __LWIPOPTS_H__
 
+// Need to enable the ALTCP stuff for TLS support
+#define LWIP_ALTCP                  1
+#define LWIP_ALTCP_TLS              1
+#define LWIP_ALTCP_TLS_MBEDTLS      1
 
 // allow override in some examples
 #ifndef NO_SYS

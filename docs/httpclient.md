@@ -24,6 +24,16 @@ of a single C file (plus header), so it's simply a matter of
 level source directory and use them from there)
 
 
+## Limitations
+
+Data is stored in memory, which is at something of a premium on the PicoW.
+It is _strongly_ recommended, therefore, that API endpoints are used whenever
+possible because full web pages are potentially significantly larger than
+the entire memory of the device.
+
+For now, only IPv4 is supported.
+
+
 ## Functions
 
 
@@ -42,6 +52,8 @@ there is no need to call this function.
 
 Initiates an HTTP request to load the provided URL. A buffer can be provided
 to store the resulting data; if this is NULL then a buffer will be allocated.
+
+The URL can include a port number, and HTTPS connections are supported.
 
 The final parameter either defines the size of the provided buffer, or (if no
 buffer is provided) the maximum buffer that will be allocated to hold the result.

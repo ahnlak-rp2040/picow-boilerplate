@@ -80,8 +80,7 @@ int main()
 
   /* Set up a simple web request. */
   httpclient_set_credentials( config_get( "WIFI_SSID" ), config_get( "WIFI_PASSWORD" ) );
-  http_request = httpclient_open( "http://httpbin.org/get", NULL, 1024 );
-
+  http_request = httpclient_open( "https://httpbin.org/get", NULL, 1024 );
 
   /* Enter the main program loop now. */
   while( true )
@@ -105,9 +104,9 @@ int main()
     if ( http_request != NULL )
     {
       httpclient_status_t l_status = httpclient_check( http_request );
-
       if ( l_status == HTTPCLIENT_COMPLETE )
       {
+        printf( "HTTP response code %d\n", http_request->http_status );
         printf( "Response:\n%s\n", httpclient_get_response( http_request ) );
         httpclient_close( http_request );
         http_request = NULL;
