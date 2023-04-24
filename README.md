@@ -29,6 +29,7 @@ support for all the features we have here.
   - `httpclient` provides a simple mechanism for retrieving data from a
   web server.
 
+
 ## Documentation
 
 I've attempted to keep everything as comprehensively documented as possible;
@@ -41,7 +42,10 @@ this can be found in the `/docs` folder of this repository, and on
 These small projects are all based on this Boilerplate, and demonstrate something
 specific in a hopefully well-explained way.
 
-* tba
+* [Galactic Unicorn Scrolling Quote Demo](https://github.com/ahnlak-rp2040/gu-scrolling-quote)
+  does what it says on the tin; pulls a quote from the web and scrolls it. Derived
+  from Pimoroni's `scroll_text` demo, it shows how you can fetch remote data
+  easily.
 
 
 ## License
