@@ -33,6 +33,10 @@ the entire memory of the device.
 
 For now, only IPv4 is supported.
 
+TLS1.3 is not currently working; if your requests are failing it's probably
+worth checking (with a tool like `curl`) if the site you're talking to is
+accepting TLS1.2 connections.
+
 
 ## Functions
 
